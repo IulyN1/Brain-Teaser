@@ -1,0 +1,11 @@
+.App {
+  text-align: center;
+  min-height: 100vh;
+  background-image: url('/public/images/hero.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.logo{
+  float: left;
+}
