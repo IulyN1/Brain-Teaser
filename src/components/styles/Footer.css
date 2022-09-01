@@ -1,0 +1,25 @@
+.footer {
+	width: 100%;
+	background: rgb(0, 0, 0);
+	background: linear-gradient(
+		360deg,
+		rgba(0, 0, 0, 1) 10%,
+		rgba(0, 0, 0, 0.5049370089832808) 60%,
+		rgba(0, 0, 0, 0.1856092778908438) 100%
+	);
+	color: gray;
+	position: absolute;
+	bottom: 0;
+	height: 5%;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.logoFooter {
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	filter: grayscale(100%);
+}
