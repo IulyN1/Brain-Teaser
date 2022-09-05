@@ -1,0 +1,14 @@
+.rootChallenges {
+	background-color: #041e24;
+	height: 100vh;
+}
+
+.mainChallenges {
+	padding-left: 20px;
+}
+
+.mainChallenges h1 {
+	color: white;
+	margin: 0;
+	padding: 10px;
+}
