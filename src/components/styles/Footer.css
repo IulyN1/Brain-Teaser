@@ -1,4 +1,4 @@
-.footer {
+.footerComponent {
 	width: 100%;
 	background: rgb(0, 0, 0);
 	background: linear-gradient(
@@ -22,4 +22,18 @@
 	height: 30px;
 	margin-right: 10px;
 	filter: grayscale(100%);
+}
+
+@media screen and (max-width: 600px) {
+	.logoFooter {
+		width: 15px;
+		height: 15px;
+	}
+	.footerComponent {
+		height: 2%;
+	}
+
+	.footerComponent p {
+		font-size: 10px;
+	}
 }

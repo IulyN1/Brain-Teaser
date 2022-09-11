@@ -1,13 +1,13 @@
 import Footer from './components/Footer';
-import { Outlet, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import './styles/App.css';
 
 function App() {
 	return (
 		<>
 			<Helmet>
 				<title>Brain Teaser - CTF Platform</title>
-				<link rel="stylesheet" href="./styles/App.css"></link>
 			</Helmet>
 			<div className="App">
 				<div className="header">
@@ -30,7 +30,6 @@ function App() {
 					<Link to="/challenges">Explore Challenges</Link>
 				</div>
 				<Footer />
-				<Outlet />
 			</div>
 		</>
 	);

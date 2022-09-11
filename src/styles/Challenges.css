@@ -1,0 +1,22 @@
+.rootChallenges {
+	background-color: #041e24;
+	min-height: 100vh;
+	position: relative;
+}
+
+.mainChallenges {
+	padding: 10px;
+}
+
+.mainChallenges h1 {
+	color: white;
+	margin: 0;
+	padding: 10px;
+}
+
+.challengesContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	max-width: 100%;
+}
