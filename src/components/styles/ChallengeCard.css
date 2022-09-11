@@ -1,0 +1,55 @@
+.challengeCard {
+	background: #053047;
+	color: white;
+	max-width: fit-content;
+	border-radius: 10px;
+	margin: 10px;
+}
+
+.logoCard {
+	width: 20px;
+	height: 20px;
+	float: left;
+	filter: brightness(0%);
+}
+
+.challengeCardContent {
+	padding: 10px;
+}
+
+.challengeCardContent h4 {
+	font-style: italic;
+}
+
+.challengeCardStartBtn {
+	display: flex;
+	justify-content: center;
+}
+
+.challengeCardStartBtn a {
+	text-decoration: none;
+	font-weight: 700;
+	color: #99ffdd;
+	border: 2px solid white;
+	padding: 5px;
+	font-size: 20px;
+	border-radius: 10px;
+}
+
+.challengeCardStartBtn a:hover {
+	background: #041e24;
+	border: 2px solid #99ffdd;
+	transition: 0.25s all;
+}
+
+.difficultyEasy {
+	color: #4dff88;
+}
+
+.difficultyMedium {
+	color: #ffff1a;
+}
+
+.difficultyHard {
+	color: red;
+}
