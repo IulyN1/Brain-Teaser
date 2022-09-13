@@ -1,0 +1,15 @@
+.difficultyLabel span {
+	font-size: 18px;
+}
+
+.difficultyEasy {
+	color: #4dff88;
+}
+
+.difficultyMedium {
+	color: #ffff1a;
+}
+
+.difficultyHard {
+	color: red;
+}

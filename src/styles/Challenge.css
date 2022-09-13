@@ -1,0 +1,39 @@
+.mainChallenge {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	padding-left: 20px;
+}
+
+.mainChallenge h1 {
+	font-size: 26px;
+}
+
+.challengeSubtitle h4 {
+	line-height: 0;
+	font-size: 16px;
+}
+
+.pointsValue {
+	color: #bada55;
+	font-size: 18px;
+}
+
+.challengeLinkContainer p {
+	font-size: 18px;
+}
+
+.challengeLinkLabel a {
+	font-weight: bold;
+	color: wheat;
+	font-style: italic;
+}
+
+.challengeDescriptionContainer h3 {
+	font-size: 20px;
+}
+
+.challengeDescriptionContainer p {
+	padding-right: 20px;
+	font-size: 18px;
+}
