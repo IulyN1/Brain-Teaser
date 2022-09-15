@@ -4,9 +4,27 @@ import Header from '../components/Header';
 import '../styles/Challenge.css';
 import { Link } from 'react-router-dom';
 import Difficulty from '../components/Difficulty';
+import { useState } from 'react';
 
 function Challenge(props) {
+	const [isAnswered, setIsAnswered] = useState('');
+	const [inputValue, setInputValue] = useState('');
 	const url = '/challenges/solve/' + props.id;
+
+	const onSubmitClicked = function (e) {
+		e.preventDefault();
+		const correctFlag = ''; // TO DO: get correct flag from api giving the challenge id
+
+		if (correctFlag === inputValue) {
+			setIsAnswered('correct');
+		} else {
+			setIsAnswered('wrong');
+		}
+	};
+
+	const handleInputChange = function (e) {
+		setInputValue(e.target.value);
+	};
 
 	return (
 		<>
@@ -36,6 +54,29 @@ function Challenge(props) {
 								</span>
 							</p>
 						</div>
+					</div>
+					<div className="submissionContainer">
+						<h3>Submission</h3>
+						<textarea
+							rows={4}
+							cols={40}
+							className="inputAreaFlag"
+							value={inputValue}
+							onChange={handleInputChange}
+							placeholder={'Insert the flag here...'}
+						></textarea>
+						<button className="submitFlagBtn" onClick={onSubmitClicked}>
+							Submit response
+						</button>
+						{isAnswered ? (
+							isAnswered === 'correct' ? (
+								<h5 className="feedbackCorrect">Your response is correct!</h5>
+							) : (
+								<h5 className="feedbackWrong">Your response is incorrect!</h5>
+							)
+						) : (
+							''
+						)}
 					</div>
 				</div>
 				<Footer />
