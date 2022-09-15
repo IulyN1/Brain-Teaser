@@ -1,0 +1,81 @@
+.mainChallenge {
+	display: flex;
+	flex-direction: column;
+	color: white;
+	padding-left: 20px;
+}
+
+.mainChallenge h1 {
+	font-size: 26px;
+}
+
+.challengeSubtitle h4 {
+	line-height: 0;
+	font-size: 16px;
+}
+
+.pointsValue {
+	color: #bada55;
+	font-size: 18px;
+}
+
+.challengeLinkContainer p {
+	font-size: 18px;
+}
+
+.challengeLinkLabel a {
+	font-weight: bold;
+	color: wheat;
+	font-style: italic;
+}
+
+.challengeDescriptionContainer h3 {
+	font-size: 20px;
+}
+
+.challengeDescriptionContainer p {
+	padding-right: 20px;
+	font-size: 18px;
+}
+
+.inputAreaFlag {
+	background-color: #053047;
+	color: #bada55;
+	border-radius: 10px;
+	font-weight: 700;
+	resize: none;
+}
+
+.submitFlagBtn {
+	cursor: pointer;
+	display: block;
+	padding: 5px;
+	background-color: #bada55;
+	color: #053047;
+	font-size: 18px;
+	font-weight: 800;
+	border-radius: 10px;
+}
+
+.submitFlagBtn:hover {
+	border-radius: 20px;
+	transition: 0.25s all;
+}
+
+.feedbackCorrect {
+	padding: 1px 5px;
+	color: #80ffaa;
+	background-color: #006622;
+	border: 1px solid #80ffaa;
+	border-radius: 5px;
+	max-width: fit-content;
+}
+
+.feedbackWrong {
+	padding: 1px 5px;
+	color: #ffd6cc;
+	background-color: #990000;
+	border: 1px solid #ffd6cc;
+	border-radius: 5px;
+	max-width: fit-content;
+}

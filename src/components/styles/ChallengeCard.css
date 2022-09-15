@@ -41,15 +41,3 @@
 	border: 2px solid #99ffdd;
 	transition: 0.25s all;
 }
-
-.difficultyEasy {
-	color: #4dff88;
-}
-
-.difficultyMedium {
-	color: #ffff1a;
-}
-
-.difficultyHard {
-	color: red;
-}
