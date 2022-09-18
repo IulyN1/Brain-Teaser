@@ -28,7 +28,7 @@
 	font-size: 24px;
 }
 
-.logo {
+.header a .logo {
 	width: 68px;
 	height: 68px;
 	margin-left: 5px;
@@ -106,7 +106,7 @@
 	.main h2 {
 		font-size: 14px;
 	}
-	.logo {
+	.header a .logo {
 		width: 30px;
 		height: 30px;
 		margin-left: 0px;
@@ -114,7 +114,7 @@
 	.header h1 {
 		font-size: 13px;
 	}
-	.buttonsContainer a {
+	.header .buttonsContainer a {
 		font-size: 14px;
 		padding: 5px;
 		margin-right: 0px;

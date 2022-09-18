@@ -75,7 +75,7 @@ function Challenge(props) {
 								<h5 className="feedbackWrong">Your response is incorrect!</h5>
 							)
 						) : (
-							''
+							<h5>{}</h5>
 						)}
 					</div>
 				</div>

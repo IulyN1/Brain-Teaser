@@ -15,20 +15,20 @@ function Login() {
 			</Helmet>
 			<div className="rootChallenges">
 				<Link to="/challenges">
-					<img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" className="logoFormPage"></img>
+					<img src={process.env.PUBLIC_URL + '/images/logo.png'} alt="logo" className="logoLogin"></img>
 				</Link>
 				<div className="loginContainer">
 					<h1>Login</h1>
 					<form className="loginForm">
-						<div className="emailContainer">
-							<label for="emailInput">Email: </label>
-							<input type="email" id="emailInput" required></input>
+						<div className="emailContainerLogin">
+							<label htmlFor="emailInputLogin">Email: </label>
+							<input type="email" id="emailInputLogin" required></input>
 						</div>
-						<div className="passwordContainer">
-							<label for="passwordInput">Password: </label>
-							<input type="password" id="passwordInput" required></input>
+						<div className="passwordContainerLogin">
+							<label htmlFor="passwordInputLogin">Password: </label>
+							<input type="password" id="passwordInputLogin" required></input>
 						</div>
-						<button type="submit" onClick={onSubmitClicked} className="submitFormBtn">
+						<button type="submit" onClick={onSubmitClicked} className="submitLoginFormBtn">
 							Login
 						</button>
 					</form>

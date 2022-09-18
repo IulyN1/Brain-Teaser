@@ -1,4 +1,4 @@
-.logoFormPage {
+.logoLogin {
 	width: 68px;
 	height: 68px;
 	margin-left: 5px;
@@ -28,8 +28,8 @@
 	height: 120px;
 }
 
-.emailContainer label,
-.passwordContainer label {
+.emailContainerLogin label,
+.passwordContainerLogin label {
 	display: inline-block;
 	text-align: right;
 	width: 100px;
@@ -39,8 +39,8 @@
 	font-size: 18px;
 }
 
-.emailContainer input,
-.passwordContainer input {
+.emailContainerLogin input,
+.passwordContainerLogin input {
 	width: 250px;
 	border-radius: 10px;
 	font-weight: 700;
@@ -51,7 +51,7 @@
 	border: none;
 }
 
-.submitFormBtn {
+.submitLoginFormBtn {
 	padding: 0px 15px 3px 15px;
 	font-size: 22px;
 	font-weight: 800;
@@ -62,7 +62,7 @@
 	border: 2px solid white;
 }
 
-.submitFormBtn:hover {
+.submitLoginFormBtn:hover {
 	cursor: pointer;
 	padding: 0px 18px 3px 18px;
 	background-color: #005266;
@@ -73,19 +73,19 @@
 }
 
 @media screen and (max-width: 600px) {
-	.emailContainer,
-	.passwordContainer {
+	.emailContainerLogin,
+	.passwordContainerLogin {
 		text-align: left;
 		display: flex;
 		flex-direction: column;
 	}
 
-	.emailContainer label,
-	.passwordContainer label {
+	.emailContainerLogin label,
+	.passwordContainerLogin label {
 		text-align: left;
 	}
 
-	.submitFormBtn {
+	.submitLoginFormBtn {
 		margin-top: 10px;
 	}
 }

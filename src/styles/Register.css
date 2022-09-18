@@ -1,0 +1,99 @@
+.logoRegister {
+	width: 68px;
+	height: 68px;
+	margin-left: 5px;
+	padding: 10px;
+}
+
+.registerContainer {
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.registerContainer a {
+	font-style: italic;
+	color: #bada55;
+	margin-top: 20px;
+}
+
+.registerForm {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	height: 165px;
+}
+
+.emailContainerRegister label,
+.passwordContainerRegister label,
+.passwordAgainContainer label {
+	display: inline-block;
+	text-align: right;
+	width: 145px;
+	margin-right: 10px;
+	cursor: pointer;
+	font-weight: 800;
+	font-size: 18px;
+}
+
+.emailContainerRegister input,
+.passwordContainerRegister input,
+.passwordAgainContainer input {
+	width: 250px;
+	border-radius: 10px;
+	font-weight: 700;
+	font-size: 16px;
+	padding: 5px;
+	color: #001719;
+	background-color: #bada55;
+	border: none;
+}
+
+.submitRegisterFormBtn {
+	padding: 0px 15px 3px 15px;
+	font-size: 22px;
+	font-weight: 800;
+	color: #99ffdd;
+	text-shadow: 2px 2px 2px black;
+	background-color: #005266;
+	border-radius: 20px;
+	border: 2px solid white;
+}
+
+.submitRegisterFormBtn:hover {
+	cursor: pointer;
+	padding: 0px 18px 3px 18px;
+	background-color: #005266;
+	border: 2px solid #99ffdd;
+	text-shadow: none;
+	font-weight: 900;
+	transition: 0.25s all;
+}
+
+@media screen and (max-width: 600px) {
+	.emailContainerRegister,
+	.passwordContainerRegister,
+	.passwordAgainContainer {
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.emailContainerRegister label,
+	.passwordContainerRegister label,
+	.passwordAgainContainer label {
+		text-align: left;
+	}
+
+	.submitRegisterFormBtn {
+		margin-top: 10px;
+	}
+
+	.registerContainer a {
+		margin-top: 30px;
+	}
+}
