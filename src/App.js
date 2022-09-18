@@ -17,8 +17,8 @@ function App() {
 
 					<h1>Brain Teaser - CTF Platform</h1>
 					<div className="buttonsContainer">
-						<Link to="/">Log in</Link>
-						<Link to="/">Sign up</Link>
+						<Link to="/login">Log in</Link>
+						<Link to="/register">Sign up</Link>
 					</div>
 				</div>
 				<div className="main">

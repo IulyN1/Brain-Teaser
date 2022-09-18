@@ -11,7 +11,7 @@ function Challenge(props) {
 	const [inputValue, setInputValue] = useState('');
 	const url = '/challenges/solve/' + props.id;
 
-	const onSubmitClicked = function (e) {
+	const onSubmitClicked = (e) => {
 		e.preventDefault();
 		const correctFlag = ''; // TO DO: get correct flag from api giving the challenge id
 
@@ -22,7 +22,7 @@ function Challenge(props) {
 		}
 	};
 
-	const handleInputChange = function (e) {
+	const handleInputChange = (e) => {
 		setInputValue(e.target.value);
 	};
 
@@ -75,7 +75,7 @@ function Challenge(props) {
 								<h5 className="feedbackWrong">Your response is incorrect!</h5>
 							)
 						) : (
-							''
+							<h5>{}</h5>
 						)}
 					</div>
 				</div>

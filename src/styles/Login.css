@@ -1,0 +1,91 @@
+.logoLogin {
+	width: 68px;
+	height: 68px;
+	margin-left: 5px;
+	padding: 10px;
+}
+
+.loginContainer {
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.loginContainer a {
+	font-style: italic;
+	color: #bada55;
+	margin-top: 20px;
+}
+
+.loginForm {
+	margin-top: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: column;
+	height: 120px;
+}
+
+.emailContainerLogin label,
+.passwordContainerLogin label {
+	display: inline-block;
+	text-align: right;
+	width: 100px;
+	margin-right: 10px;
+	cursor: pointer;
+	font-weight: 800;
+	font-size: 18px;
+}
+
+.emailContainerLogin input,
+.passwordContainerLogin input {
+	width: 250px;
+	border-radius: 10px;
+	font-weight: 700;
+	font-size: 16px;
+	padding: 5px;
+	color: #001719;
+	background-color: #bada55;
+	border: none;
+}
+
+.submitLoginFormBtn {
+	padding: 0px 15px 3px 15px;
+	font-size: 22px;
+	font-weight: 800;
+	color: #99ffdd;
+	text-shadow: 2px 2px 2px black;
+	background-color: #005266;
+	border-radius: 20px;
+	border: 2px solid white;
+}
+
+.submitLoginFormBtn:hover {
+	cursor: pointer;
+	padding: 0px 18px 3px 18px;
+	background-color: #005266;
+	border: 2px solid #99ffdd;
+	text-shadow: none;
+	font-weight: 900;
+	transition: 0.25s all;
+}
+
+@media screen and (max-width: 600px) {
+	.emailContainerLogin,
+	.passwordContainerLogin {
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.emailContainerLogin label,
+	.passwordContainerLogin label {
+		text-align: left;
+	}
+
+	.submitLoginFormBtn {
+		margin-top: 10px;
+	}
+}
