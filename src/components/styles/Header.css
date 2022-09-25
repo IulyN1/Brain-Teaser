@@ -21,8 +21,8 @@
 }
 
 .logo {
-	width: 68px;
-	height: 68px;
+	width: 58px;
+	height: 58px;
 	margin-left: 5px;
 }
 
@@ -38,4 +38,51 @@
 .buttonsContainer a:hover {
 	color: #33cccc;
 	text-shadow: 1px 1px #bada55;
+}
+
+.profileIcon {
+	width: 26px;
+	height: 26px;
+}
+
+.menuIcon {
+	width: 18px;
+	height: 18px;
+	padding-right: 10px;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.menuItem {
+	padding: 10px;
+}
+
+.dropdownMenu {
+	display: none;
+	position: absolute;
+	right: 10px;
+	background-color: #041e24;
+	min-width: 150px;
+	box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.5);
+	z-index: 1;
+}
+
+.dropdownMenu div:hover {
+	background-color: black;
+}
+
+.dropdownMenu div:hover a {
+	color: white;
+	text-shadow: none;
+}
+
+.dropdownMenu div:hover img {
+	filter: brightness(0) invert(1);
+}
+
+.dropdown:hover .dropdownMenu {
+	display: block;
 }
