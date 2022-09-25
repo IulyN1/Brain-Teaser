@@ -1,0 +1,67 @@
+.mainSettings {
+	padding-left: 50px;
+	padding-top: 10px;
+	display: flex;
+	flex-direction: column;
+	color: white;
+}
+
+.mainSettings h2 {
+	color: #33cccc;
+	text-shadow: 5px 5px black;
+}
+
+.mainSettings a:first-child {
+	text-decoration: none;
+	background: none;
+	border: 3px solid white;
+	color: #bada55;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 20px;
+	padding: 10px;
+	margin: 20px 0px 0px 0px;
+	width: fit-content;
+}
+
+.mainSettings a:first-child:hover {
+	background: #003333;
+	border: 3px solid #33cccc;
+	color: white;
+	transition: 0.5s all;
+}
+
+.mainSettings a {
+	text-decoration: none;
+	background: none;
+	color: #bada55;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 20px;
+	padding: 10px;
+	margin-bottom: 6vh;
+	margin-left: 10px;
+	width: fit-content;
+}
+
+.mainSettings a:hover {
+	background: #003333;
+	color: white;
+	transition: 0.5s all;
+}
+
+.statsContainer span {
+	color: wheat;
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.statsContainer h4 {
+	margin-left: 20px;
+}
+
+@media screen and (max-width: 400px) {
+	.mainSettings {
+		padding-left: 20px;
+	}
+}
