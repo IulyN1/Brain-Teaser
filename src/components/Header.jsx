@@ -17,26 +17,26 @@ function Header() {
 						<img src={process.env.PUBLIC_URL + '/images/user.png'} alt="profile" className="profileIcon" />
 					</Link>
 					<div className="dropdownMenu">
-						<div className="menuItem">
-							<Link to="/settings">
+						<Link to="/settings">
+							<div className="menuItem">
 								<img
 									src={process.env.PUBLIC_URL + '/images/settings.png'}
 									alt="settings"
 									className="menuIcon"
 								/>
 								<span>Settings</span>
-							</Link>
-						</div>
-						<div className="menuItem">
-							<Link to="/login" onClick={onLogoutClicked}>
+							</div>
+						</Link>
+						<Link to="/login" onClick={onLogoutClicked}>
+							<div className="menuItem">
 								<img
 									src={process.env.PUBLIC_URL + '/images/logout.png'}
 									alt="logout"
 									className="menuIcon"
 								/>
 								<span>Logout</span>
-							</Link>
-						</div>
+							</div>
+						</Link>
 					</div>
 				</div>
 				<Link to="/login">Log in</Link>

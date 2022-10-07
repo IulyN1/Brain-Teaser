@@ -65,16 +65,21 @@
 	position: absolute;
 	right: 10px;
 	background-color: #041e24;
-	min-width: 150px;
+	min-width: 130px;
 	box-shadow: 5px 5px 15px 5px rgba(0, 0, 0, 0.5);
 	z-index: 1;
+}
+
+.dropdownMenu a{
+	margin: 0;
+	padding: 0;
 }
 
 .dropdownMenu div:hover {
 	background-color: black;
 }
 
-.dropdownMenu div:hover a {
+.dropdownMenu a div:hover {
 	color: white;
 	text-shadow: none;
 }
