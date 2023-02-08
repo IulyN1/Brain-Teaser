@@ -4,6 +4,12 @@ import { Helmet } from 'react-helmet';
 import './styles/App.css';
 
 function App() {
+	fetch('http://localhost:5000/api/data')
+		.then((res) => res.json())
+		.then((data) => {
+			console.log(data);
+		});
+
 	return (
 		<>
 			<Helmet>
