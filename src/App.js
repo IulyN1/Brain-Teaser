@@ -1,15 +1,9 @@
-import Footer from './components/Footer';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './styles/App.css';
+import Footer from './components/Footer';
 
 function App() {
-	fetch('http://localhost:5000/api/data')
-		.then((res) => res.json())
-		.then((data) => {
-			console.log(data);
-		});
-
 	return (
 		<>
 			<Helmet>
