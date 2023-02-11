@@ -1,15 +1,25 @@
-import Footer from '../components/Footer';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import Header from '../components/Header';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import '../styles/Challenge.css';
-import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import Difficulty from '../components/Difficulty';
-import { useState } from 'react';
 
-function Challenge(props) {
+function Challenge() {
 	const [isAnswered, setIsAnswered] = useState('');
 	const [inputValue, setInputValue] = useState('');
-	const url = '/challenges/solve/' + props.id;
+
+	const navigate = useNavigate();
+	const location = useLocation();
+	const challenge = location.state?.challenge;
+	const url = '/challenges/solve/' + challenge?.challengeId;
+
+	useEffect(() => {
+		if (!challenge) {
+			navigate('/challenges');
+		}
+	}, [challenge, navigate]);
 
 	const onSubmitClicked = (e) => {
 		e.preventDefault();
@@ -29,28 +39,30 @@ function Challenge(props) {
 	return (
 		<>
 			<Helmet>
-				<title>{props.title}</title>
+				<title>{challenge?.title}</title>
 			</Helmet>
 			<div className="rootChallenges">
 				<Header />
 				<div className="mainChallenge">
-					<h1>{props.title}</h1>
+					<h1>{challenge?.title}</h1>
 					<div className="challengeSubtitle">
-						<Difficulty level={props.level} />
+						<Difficulty level={challenge?.level} />
 						<h4>
-							Points: <span className="pointsValue">{props.points}</span>
+							Points: <span className="pointsValue">{challenge?.points}</span>
 						</h4>
 					</div>
 					<div>
 						<div className="challengeDescriptionContainer">
 							<h3>Problem Statement</h3>
-							<p>{props.description}</p>
+							<p>{challenge?.description}</p>
 						</div>
 						<div className="challengeLinkContainer">
 							<p>
 								Challenge link:{' '}
 								<span className="challengeLinkLabel">
-									<Link to={url}>here</Link>
+									<Link to={url} state={{ challenge }}>
+										here
+									</Link>
 								</span>
 							</p>
 						</div>

@@ -1,10 +1,21 @@
-import Footer from '../components/Footer';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import Header from '../components/Header';
 import '../styles/Challenges.css';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 import ChallengeCard from '../components/ChallengeCard';
+import { getChallenges } from '../API';
 
 function Challenges() {
+	const [challenges, setChallenges] = useState([]);
+
+	useEffect(() => {
+		(async () => {
+			let fetchItems = await getChallenges();
+			setChallenges(JSON.parse(fetchItems));
+		})();
+	}, []);
+
 	return (
 		<>
 			<Helmet>
@@ -14,12 +25,9 @@ function Challenges() {
 				<Header />
 				<div className="mainChallenges">
 					<div className="challengesContainer">
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
-						<ChallengeCard id={'htmlbtn'} title={'HTML Disabled Buttons'} level={'Easy'} />
+						{challenges.map((challenge) => (
+							<ChallengeCard key={challenge.id} challenge={challenge} />
+						))}
 					</div>
 				</div>
 				<Footer />
