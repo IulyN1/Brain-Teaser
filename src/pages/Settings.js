@@ -29,9 +29,6 @@ function Settings(props) {
 						<h4>
 							Rate of success: <span>10</span>
 						</h4>
-						<h4>
-							Highest challenge streak (in a day): <span>10</span>
-						</h4>
 					</div>
 					<h2>Change password</h2>
 					<Link to="/changepassword">Change password</Link>
