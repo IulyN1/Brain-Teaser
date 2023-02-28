@@ -39,8 +39,25 @@ const login = (request, response) => {
 	});
 };
 
+const register = (request, response) => {
+	const email = request.body.email;
+	const pass = request.body.password;
+
+	pool.query(
+		'INSERT INTO users(email, password, token) VALUES($1, $2, $3)',
+		[email, pass, pass],
+		(error, results) => {
+			if (error) {
+				throw error;
+			}
+			response.status(200).json(true);
+		}
+	);
+};
+
 module.exports = {
 	getChallenges,
 	getChallenge,
-	login
+	login,
+	register
 };
