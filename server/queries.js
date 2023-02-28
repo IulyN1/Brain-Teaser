@@ -27,7 +27,20 @@ const getChallenge = (request, response) => {
 	});
 };
 
+const login = (request, response) => {
+	const email = request.body.email;
+	const pass = request.body.password;
+
+	pool.query('SELECT token FROM users WHERE email = $1 AND password = $2', [email, pass], (error, results) => {
+		if (error) {
+			throw error;
+		}
+		response.status(200).json(results.rows[0]);
+	});
+};
+
 module.exports = {
 	getChallenges,
-	getChallenge
+	getChallenge,
+	login
 };

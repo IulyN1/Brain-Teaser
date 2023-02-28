@@ -19,7 +19,7 @@ function Register() {
 				</Link>
 				<div className="registerContainer">
 					<h1>Register</h1>
-					<form className="registerForm" autocomplete="off">
+					<form className="registerForm" autoComplete="off">
 						<div className="emailContainerRegister">
 							<label htmlFor="emailInputRegister">Email: </label>
 							<input type="email" id="emailInputRegister" required></input>

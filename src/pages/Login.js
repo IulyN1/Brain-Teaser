@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
@@ -6,10 +6,17 @@ import '../styles/Login.css';
 import { login } from '../API';
 
 function Login() {
+	const token = localStorage.getItem('token');
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [pass, setPass] = useState('');
 	const [errorMessage, setErrorMessage] = useState('');
+
+	useEffect(() => {
+		if (token) {
+			navigate('/challenges');
+		}
+	}, [navigate, token]);
 
 	const onSubmitClicked = async (e) => {
 		e.preventDefault();
@@ -39,7 +46,7 @@ function Login() {
 				</Link>
 				<div className="loginContainer">
 					<h1>Login</h1>
-					<form className="loginForm" autocomplete="off">
+					<form className="loginForm" autoComplete="off">
 						<div className="emailContainerLogin">
 							<label htmlFor="emailInputLogin">Email: </label>
 							<input
