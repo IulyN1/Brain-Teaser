@@ -7,3 +7,17 @@ export async function getChallenges() {
 export async function getChallenge(id) {
 	return await (await fetch(`${baseUrl}challenges/${id}`)).text();
 }
+
+export async function login(email, password) {
+	const response = await fetch(`${baseUrl}login`, {
+		method: 'POST',
+		body: JSON.stringify({
+			email,
+			password
+		}),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	return await response.json();
+}

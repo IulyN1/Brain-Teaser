@@ -15,6 +15,7 @@ app.use(
 
 app.get('/challenges', db.getChallenges);
 app.get('/challenges/:id', db.getChallenge);
+app.post('/login', db.login);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
