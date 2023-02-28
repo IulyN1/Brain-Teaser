@@ -74,6 +74,15 @@
 	transition: 0.25s all;
 }
 
+.errorMessageRegister {
+	padding: 1px 5px;
+	color: white;
+	background-color: #990000;
+	border: 1px solid white;
+	border-radius: 5px;
+	max-width: fit-content;
+}
+
 @media screen and (max-width: 600px) {
 	.emailContainerRegister,
 	.passwordContainerRegister,

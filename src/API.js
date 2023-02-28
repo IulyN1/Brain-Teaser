@@ -21,3 +21,17 @@ export async function login(email, password) {
 	});
 	return await response.json();
 }
+
+export async function register(email, password) {
+	const response = await fetch(`${baseUrl}register`, {
+		method: 'POST',
+		body: JSON.stringify({
+			email,
+			password
+		}),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	return await response.json();
+}

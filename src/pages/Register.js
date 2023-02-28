@@ -1,11 +1,36 @@
+import { useState } from 'react';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Register.css';
+import { register } from '../API';
 
 function Register() {
-	const onSubmitClicked = (e) => {
+	const navigate = useNavigate();
+	const [email, setEmail] = useState('');
+	const [pass, setPass] = useState('');
+	const [passAgain, setPassAgain] = useState('');
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const onSubmitClicked = async (e) => {
 		e.preventDefault();
+
+		if (email && pass) {
+			if (pass === passAgain) {
+				const response = await register(email, pass);
+				if (response) {
+					localStorage.removeItem('token');
+					setErrorMessage('');
+					navigate('/login');
+				} else {
+					setErrorMessage('A database error has occurred!');
+				}
+			} else {
+				setErrorMessage('The passwords do not match!');
+			}
+		} else {
+			setErrorMessage('Email and password cannot be empty!');
+		}
 	};
 
 	return (
@@ -22,15 +47,42 @@ function Register() {
 					<form className="registerForm" autoComplete="off">
 						<div className="emailContainerRegister">
 							<label htmlFor="emailInputRegister">Email: </label>
-							<input type="email" id="emailInputRegister" required></input>
+							<input
+								type="email"
+								id="emailInputRegister"
+								required
+								value={email}
+								onChange={(e) => {
+									setEmail(e.target.value);
+									setErrorMessage('');
+								}}
+							></input>
 						</div>
 						<div className="passwordContainerRegister">
 							<label htmlFor="passwordInputRegister">Password: </label>
-							<input type="password" id="passwordInputRegister" required></input>
+							<input
+								type="password"
+								id="passwordInputRegister"
+								required
+								value={pass}
+								onChange={(e) => {
+									setPass(e.target.value);
+									setErrorMessage('');
+								}}
+							></input>
 						</div>
 						<div className="passwordAgainContainer">
 							<label htmlFor="passwordAgainInput">Password again: </label>
-							<input type="password" id="passwordAgainInput" required></input>
+							<input
+								type="password"
+								id="passwordAgainInput"
+								required
+								value={passAgain}
+								onChange={(e) => {
+									setPassAgain(e.target.value);
+									setErrorMessage('');
+								}}
+							></input>
 						</div>
 						<button type="submit" onClick={onSubmitClicked} className="submitRegisterFormBtn">
 							Register
@@ -39,6 +91,7 @@ function Register() {
 					<Link to="/login">
 						<h5>Already have an account? Log in here!</h5>
 					</Link>
+					{errorMessage && <span className="errorMessageRegister">{errorMessage}</span>}
 				</div>
 				<Footer />
 			</div>

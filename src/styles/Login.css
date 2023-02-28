@@ -72,7 +72,7 @@
 	transition: 0.25s all;
 }
 
-.errorMessage {
+.errorMessageLogin {
 	padding: 1px 5px;
 	color: white;
 	background-color: #990000;

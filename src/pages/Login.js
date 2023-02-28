@@ -80,7 +80,7 @@ function Login() {
 					<Link to="/register">
 						<h5>Don't have an account? Create one here!</h5>
 					</Link>
-					{errorMessage && <span className="errorMessage">{errorMessage}</span>}
+					{errorMessage && <span className="errorMessageLogin">{errorMessage}</span>}
 				</div>
 				<Footer />
 			</div>
