@@ -17,6 +17,7 @@ app.get('/challenges', db.getChallenges);
 app.get('/challenges/:id', db.getChallenge);
 app.post('/login', db.login);
 app.post('/register', db.register);
+app.patch('/changePassword/:token', db.changePassword);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

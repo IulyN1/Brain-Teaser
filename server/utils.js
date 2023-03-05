@@ -39,6 +39,21 @@ function generateToken(id) {
 }
 
 /**
+ * Gets the user id from a given json web token by decoding it
+ * @param {string} token - the token that needs to be decoded in order to get the id
+ * @returns {number} - the user id decoded from the json web token if the decoding is successful
+ * 			null - if the decoding is unsuccessful
+ */
+function getIdFromToken(token) {
+	const decoded = jwt.verify(token, jwtSecret);
+	if (decoded.id) {
+		const uid = parseInt(decoded.id);
+		return uid;
+	}
+	return null;
+}
+
+/**
  * This function will hash a password using the bcrypt algorithm with a salt rounds value of 10.
  * @param {string} password - the password that needs to be hashed
  * @returns {string} - the hashed password
@@ -60,4 +75,4 @@ async function comparePasswords(password1, password2) {
 	return isSame;
 }
 
-module.exports = { verifyToken, generateToken, hashPassword, comparePasswords };
+module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, getIdFromToken };
