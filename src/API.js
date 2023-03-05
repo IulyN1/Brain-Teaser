@@ -35,3 +35,17 @@ export async function register(email, password) {
 	});
 	return await response.json();
 }
+
+export async function changePassword(token, oldPassword, newPassword) {
+	const response = await fetch(`${baseUrl}changePassword/${token}`, {
+		method: 'PATCH',
+		body: JSON.stringify({
+			oldPassword,
+			newPassword
+		}),
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+	return response;
+}

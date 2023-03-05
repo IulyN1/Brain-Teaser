@@ -1,4 +1,4 @@
-const { verifyToken, generateToken, hashPassword, comparePasswords } = require('./utils');
+const { verifyToken, generateToken, hashPassword, comparePasswords, getIdFromToken } = require('./utils');
 
 const Pool = require('pg').Pool;
 const pool = new Pool({
@@ -73,9 +73,47 @@ const register = async (request, response) => {
 	});
 };
 
+const changePassword = async (request, response) => {
+	const token = request.params.token;
+	const oldPass = request.body.oldPassword;
+	const newPass = request.body.newPassword;
+
+	const uid = getIdFromToken(token);
+	if (!uid) {
+		return response.status(404).json({ message: 'User not found!' });
+	}
+
+	pool.query('SELECT password FROM users WHERE uid = $1', [uid], async (error, results) => {
+		if (error) {
+			throw error;
+		}
+
+		let userPass;
+		if (results.rows.length === 1) {
+			userPass = results.rows[0].password;
+		}
+
+		// Compare given password with the password found for the user
+		const passwordsMatch = await comparePasswords(oldPass, userPass);
+		if (!passwordsMatch) {
+			return response.status(404).json({ message: 'The old password given is invalid!' });
+		}
+
+		const password = await hashPassword(newPass);
+
+		pool.query('UPDATE users SET password = $1 WHERE uid = $2', [password, uid], (error, results) => {
+			if (error) {
+				throw error;
+			}
+			response.status(200).json(true);
+		});
+	});
+};
+
 module.exports = {
 	getChallenges,
 	getChallenge,
 	login,
-	register
+	register,
+	changePassword
 };
