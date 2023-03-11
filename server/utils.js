@@ -11,17 +11,17 @@ const jwtSecret = 'myincrediblysecretkey';
  * @param {function} next - (default) callback function for carrying on with the request
  * @returns - 401 error if no token is provided
  *          - 403 error if the token is not valid,
- *          - otherwise carry on with the request
+ *          - otherwise carry on with the request having the userId added to request object
  */
 function verifyToken(req, res, next) {
-	const token = req.headers.authorization;
+	const token = req.headers.authorization?.split(' ')[1];
 	if (!token) {
 		return res.status(401).json({ message: 'No token provided!' });
 	}
 
 	try {
 		const decoded = jwt.verify(token, jwtSecret);
-		req.user = decoded;
+		req.userId = parseId(decoded);
 		next();
 	} catch (err) {
 		return res.status(403).json({ message: 'Invalid token!' });
@@ -39,13 +39,12 @@ function generateToken(id) {
 }
 
 /**
- * Gets the user id from a given json web token by decoding it
- * @param {string} token - the token that needs to be decoded in order to get the id
- * @returns {number} - the user id decoded from the json web token if the decoding is successful
- * 			null - if the decoding is unsuccessful
+ * Parses the user id from a given decoded json web token
+ * @param {string} decoded - the decoded json web token
+ * @returns {number} - the parsed user id from the decoded json web token if there is one
+ * 			null - if the decoded json web token doesn't have an id
  */
-function getIdFromToken(token) {
-	const decoded = jwt.verify(token, jwtSecret);
+function parseId(decoded) {
 	if (decoded.id) {
 		const uid = parseInt(decoded.id);
 		return uid;
@@ -75,4 +74,4 @@ async function comparePasswords(password1, password2) {
 	return isSame;
 }
 
-module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, getIdFromToken };
+module.exports = { verifyToken, generateToken, hashPassword, comparePasswords };

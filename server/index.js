@@ -1,3 +1,4 @@
+const { verifyToken } = require('./utils');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -17,7 +18,7 @@ app.get('/challenges', db.getChallenges);
 app.get('/challenges/:id', db.getChallenge);
 app.post('/login', db.login);
 app.post('/register', db.register);
-app.patch('/changePassword/:token', db.changePassword);
+app.post('/changePassword', verifyToken, db.changePassword);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
