@@ -37,14 +37,15 @@ export async function register(email, password) {
 }
 
 export async function changePassword(token, oldPassword, newPassword) {
-	const response = await fetch(`${baseUrl}changePassword/${token}`, {
-		method: 'PATCH',
+	const response = await fetch(`${baseUrl}changePassword`, {
+		method: 'POST',
 		body: JSON.stringify({
 			oldPassword,
 			newPassword
 		}),
 		headers: {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
 		}
 	});
 	return response;
