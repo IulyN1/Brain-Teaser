@@ -1,3 +1,10 @@
+.logoSolve {
+	width: 58px;
+	height: 58px;
+	margin-left: 5px;
+	padding: 10px;
+}
+
 .solveChallengeContainer {
 	padding: 30px;
 	color: white;

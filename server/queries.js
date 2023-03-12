@@ -22,7 +22,7 @@ const getChallenges = (request, response) => {
 const getChallenge = (request, response) => {
 	const challengeId = parseInt(request.params.id);
 
-	pool.query('SELECT * FROM challenges WHERE challengeId = $1', [challengeId], (error, results) => {
+	pool.query('SELECT * FROM challenges WHERE "challengeId" = $1', [challengeId], (error, results) => {
 		if (error) {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
@@ -113,10 +113,59 @@ const changePassword = async (request, response) => {
 	});
 };
 
+const getChallengeContent = (request, response) => {
+	const challengeId = request.params.id;
+
+	pool.query('SELECT * FROM contents WHERE "challengeId" = $1', [challengeId], (error, results) => {
+		if (error) {
+			console.log(error);
+			return response.status(500).json({ message: error.message });
+		}
+
+		let html;
+		if (results.rows.length === 1) {
+			html = results.rows[0].html;
+		}
+
+		if (html) {
+			response.status(200).send(html);
+		} else {
+			response.status(404).json({ message: 'Challenge not found!' });
+		}
+	});
+};
+
+const checkFlag = (request, response) => {
+	const challengeId = request.body.challengeId;
+	const flag = request.body.flag;
+
+	pool.query('SELECT * FROM flags WHERE "challengeId" = $1', [challengeId], (error, results) => {
+		if (error) {
+			console.log(error);
+			return response.status(500).json({ message: error.message });
+		}
+
+		let challengeFlag;
+		if (results.rows.length === 1) {
+			challengeFlag = results.rows[0].flag;
+		} else {
+			response.status(404).json({ message: 'Challenge not found!' });
+		}
+
+		if (flag === challengeFlag) {
+			response.status(200).json(true);
+		} else {
+			response.status(200).json(false);
+		}
+	});
+};
+
 module.exports = {
 	getChallenges,
 	getChallenge,
 	login,
 	register,
-	changePassword
+	changePassword,
+	getChallengeContent,
+	checkFlag
 };

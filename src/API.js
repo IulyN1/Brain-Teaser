@@ -37,7 +37,7 @@ export async function register(email, password) {
 }
 
 export async function changePassword(token, oldPassword, newPassword) {
-	const response = await fetch(`${baseUrl}changePassword`, {
+	const response = await fetch(`${baseUrl}change-password`, {
 		method: 'POST',
 		body: JSON.stringify({
 			oldPassword,
@@ -49,4 +49,23 @@ export async function changePassword(token, oldPassword, newPassword) {
 		}
 	});
 	return response;
+}
+
+export async function getChallengeContent(id) {
+	return (await fetch(`${baseUrl}challenge-solve/${id}`)).text();
+}
+
+export async function checkFlag(token, challengeId, flag) {
+	const response = await fetch(`${baseUrl}check-flag`, {
+		method: 'POST',
+		body: JSON.stringify({
+			challengeId,
+			flag
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	});
+	return response.json();
 }
