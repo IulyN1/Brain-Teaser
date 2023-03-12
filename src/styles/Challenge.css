@@ -44,6 +44,7 @@
 	border-radius: 10px;
 	font-weight: 700;
 	resize: none;
+	padding: 5px;
 }
 
 .submitFlagBtn {

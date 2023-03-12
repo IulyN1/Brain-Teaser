@@ -5,10 +5,12 @@ import '../styles/Challenge.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Difficulty from '../components/Difficulty';
+import { checkFlag } from '../API';
 
 function Challenge() {
+	const token = localStorage.getItem('token');
 	const [isAnswered, setIsAnswered] = useState('');
-	const [inputValue, setInputValue] = useState('');
+	const [flagValue, setFlagValue] = useState('');
 
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -21,19 +23,20 @@ function Challenge() {
 		}
 	}, [challenge, navigate]);
 
-	const onSubmitClicked = (e) => {
+	const onSubmitClicked = async (e) => {
 		e.preventDefault();
-		const correctFlag = ''; // TO DO: get correct flag from api giving the challenge id
 
-		if (correctFlag === inputValue) {
-			setIsAnswered('correct');
+		if (!token) {
+			alert('You should log in first!');
+			navigate('/login');
 		} else {
-			setIsAnswered('wrong');
+			const response = await checkFlag(token, challenge.challengeId, flagValue);
+			if (response) {
+				setIsAnswered('correct');
+			} else {
+				setIsAnswered('wrong');
+			}
 		}
-	};
-
-	const handleInputChange = (e) => {
-		setInputValue(e.target.value);
 	};
 
 	return (
@@ -73,9 +76,12 @@ function Challenge() {
 							rows={4}
 							cols={40}
 							className="inputAreaFlag"
-							value={inputValue}
-							onChange={handleInputChange}
+							value={flagValue}
+							onChange={(e) => {
+								setFlagValue(e.target.value);
+							}}
 							placeholder={'Insert the flag here...'}
+							spellCheck="false"
 						></textarea>
 						<button className="submitFlagBtn" onClick={onSubmitClicked}>
 							Submit response
