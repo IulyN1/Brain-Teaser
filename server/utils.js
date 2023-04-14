@@ -74,4 +74,13 @@ async function comparePasswords(password1, password2) {
 	return isSame;
 }
 
-module.exports = { verifyToken, generateToken, hashPassword, comparePasswords };
+/**
+ * Rounds a number to 2 digits at max, using the system precision
+ * @param {number} number - the number to be rounded
+ * @returns {number} - the rounded number
+ */
+function roundNumber(number) {
+	return Math.round((number + Number.EPSILON) * 100) / 100;
+}
+
+module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, roundNumber };

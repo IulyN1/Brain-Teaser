@@ -16,12 +16,13 @@ app.use(
 
 app.use(express.static('public'));
 app.get('/htmlbtn', (req, res) => {
-	res.sendFile(__dirname + '/public/htmlbtn.html', (err) => {
-		if (err) {
-			console.error(err);
-			res.status(500).end();
-		}
-	});
+	res.sendFile(__dirname + '/public/htmlbtn.html');
+});
+app.get('/httpreq', (req, res) => {
+	res.sendFile(__dirname + '/public/httpreq.html');
+});
+app.get('/req-flag', (req, res) => {
+	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
 });
 
 app.get('/challenges', db.getChallenges);

@@ -64,7 +64,9 @@ export async function checkFlag(token, challengeId, flag) {
 
 export async function getStats(token) {
 	const response = await fetch(`${baseUrl}stats`, {
+		method: 'GET',
 		headers: {
+			'Content-Type': 'application/json',
 			Authorization: `Bearer ${token}`
 		}
 	});

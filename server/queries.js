@@ -1,4 +1,4 @@
-const { generateToken, hashPassword, comparePasswords } = require('./utils');
+const { generateToken, hashPassword, comparePasswords, roundNumber } = require('./utils');
 
 const Pool = require('pg').Pool;
 const pool = new Pool({
@@ -214,7 +214,7 @@ const getStats = (request, response) => {
 	const uid = request.userId;
 	let stats = {};
 
-	pool.query('SELECT * FROM stats WHERE uid = $1', [uid], (error, results) => {
+	pool.query('SELECT * FROM stats WHERE uid = $1', [uid], async (error, results) => {
 		if (error) {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
@@ -225,24 +225,31 @@ const getStats = (request, response) => {
 			stats.submissions = results.rows[0].submissions;
 		}
 
-		const completed = getNoOfCompletedChallenges(uid);
+		const user = await getUser(uid);
+		stats.user = user ? user : 'hacker';
+
+		const completed = await getNoOfCompletedChallenges(uid);
 		stats.completed = completed ? completed : 0;
 		const rate = stats.completed / stats.submissions;
-		stats.rate = rate ? rate : 0;
+		stats.rate = rate ? roundNumber(rate * 100) : 0;
 
 		response.status(200).json(stats);
 	});
 };
 
-const getNoOfCompletedChallenges = (uid) => {
-	pool.query('SELECT COUNT(*) FROM completed WHERE uid = $1', [uid], (error, results) => {
-		if (error) {
-			console.log(error);
-		}
+const getUser = async (uid) => {
+	const results = await pool.query('SELECT * FROM users WHERE uid = $1', [uid]);
+	if (results.rows.length === 1) {
+		let user = results.rows[0].email;
+		user = user.split('@')[0];
+		return user;
+	}
+};
 
-		const completed = results.rows[0].count;
-		return completed;
-	});
+const getNoOfCompletedChallenges = async (uid) => {
+	const results = await pool.query('SELECT COUNT(*) FROM completed WHERE uid = $1', [uid]);
+	const completed = parseInt(results.rows[0].count);
+	return completed;
 };
 
 module.exports = {

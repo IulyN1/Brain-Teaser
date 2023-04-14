@@ -1,0 +1,13 @@
+<html>
+    <body>
+        <h1 id="title"></h1>
+        <script>
+            const elem = document.getElementById('title');
+            const request = fetch('http://localhost:5000/req-flag').then((response)=>{
+                response.json().then((res)=>{
+                    elem.textContent = res.message;
+                });
+            });
+        </script>
+    </body>
+</html>
