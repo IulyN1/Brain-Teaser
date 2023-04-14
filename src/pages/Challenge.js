@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/Challenge.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Difficulty from '../components/Difficulty';
-import { checkFlag } from '../API';
+import { baseUrl, checkFlag } from '../API';
 
 function Challenge() {
 	const token = localStorage.getItem('token');
@@ -15,7 +15,7 @@ function Challenge() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const challenge = location.state?.challenge;
-	const url = '/challenges/solve/' + challenge?.challengeId;
+	const url = baseUrl + challenge?.challengeId;
 
 	useEffect(() => {
 		if (!challenge) {
@@ -63,9 +63,9 @@ function Challenge() {
 							<p>
 								Challenge link:{' '}
 								<span className="challengeLinkLabel">
-									<Link to={url} state={{ challenge }}>
+									<a href={url} target="_blank" rel="noopener noreferrer">
 										here
-									</Link>
+									</a>
 								</span>
 							</p>
 						</div>

@@ -1,4 +1,4 @@
-const { generateToken, hashPassword, comparePasswords } = require('./utils');
+const { generateToken, hashPassword, comparePasswords, roundNumber } = require('./utils');
 
 const Pool = require('pg').Pool;
 const pool = new Pool({
@@ -11,18 +11,6 @@ const pool = new Pool({
 
 const getChallenges = (request, response) => {
 	pool.query('SELECT * FROM challenges', (error, results) => {
-		if (error) {
-			console.log(error);
-			return response.status(500).json({ message: error.message });
-		}
-		response.status(200).json(results.rows);
-	});
-};
-
-const getChallenge = (request, response) => {
-	const challengeId = parseInt(request.params.id);
-
-	pool.query('SELECT * FROM challenges WHERE "challengeId" = $1', [challengeId], (error, results) => {
 		if (error) {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
@@ -73,8 +61,33 @@ const register = async (request, response) => {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
 		}
+		insertIntoStats(email, hashedPassword);
 		response.status(200).json(true);
 	});
+};
+
+const insertIntoStats = (email, hashedPassword) => {
+	pool.query(
+		'SELECT uid FROM users WHERE email = $1 AND password = $2',
+		[email, hashedPassword],
+		(error, results) => {
+			if (error) {
+				console.log(error);
+			}
+			if (results.rows.length === 1) {
+				const uid = results.rows[0].uid;
+				pool.query(
+					'INSERT INTO stats(uid, points, submissions) VALUES($1, $2, $3)',
+					[uid, 0, 0],
+					(error, results) => {
+						if (error) {
+							console.log(error);
+						}
+					}
+				);
+			}
+		}
+	);
 };
 
 const changePassword = async (request, response) => {
@@ -113,33 +126,12 @@ const changePassword = async (request, response) => {
 	});
 };
 
-const getChallengeContent = (request, response) => {
-	const challengeId = request.params.id;
-
-	pool.query('SELECT * FROM contents WHERE "challengeId" = $1', [challengeId], (error, results) => {
-		if (error) {
-			console.log(error);
-			return response.status(500).json({ message: error.message });
-		}
-
-		let html;
-		if (results.rows.length === 1) {
-			html = results.rows[0].html;
-		}
-
-		if (html) {
-			response.status(200).send(html);
-		} else {
-			response.status(404).json({ message: 'Challenge not found!' });
-		}
-	});
-};
-
 const checkFlag = (request, response) => {
+	const uid = request.userId;
 	const challengeId = request.body.challengeId;
 	const flag = request.body.flag;
 
-	pool.query('SELECT * FROM flags WHERE "challengeId" = $1', [challengeId], (error, results) => {
+	pool.query('SELECT * FROM flags WHERE "challengeId" = $1', [challengeId], async (error, results) => {
 		if (error) {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
@@ -152,20 +144,119 @@ const checkFlag = (request, response) => {
 			response.status(404).json({ message: 'Challenge not found!' });
 		}
 
+		const isCompleted = await checkIfUserCompletedChallenge(challengeId, uid);
+
 		if (flag === challengeFlag) {
+			if (!isCompleted) {
+				addCompleted(challengeId, uid);
+				addSubmissionAndPoints(challengeId, uid);
+			}
 			response.status(200).json(true);
 		} else {
+			if (!isCompleted) {
+				addSubmission(uid);
+			}
 			response.status(200).json(false);
 		}
 	});
 };
 
+const checkIfUserCompletedChallenge = async (challengeId, uid) => {
+	const response = await pool.query('SELECT * FROM completed WHERE "challengeId" = $1 AND uid = $2', [
+		challengeId,
+		uid
+	]);
+	return response.rows.length === 1 ? true : false;
+};
+
+const addCompleted = (challengeId, uid) => {
+	pool.query('INSERT INTO completed("challengeId", uid) VALUES($1, $2)', [challengeId, uid], (error, results) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+};
+
+const addSubmission = (uid) => {
+	pool.query('UPDATE stats SET submissions = submissions + 1 WHERE uid = $1', [uid], (error, results) => {
+		if (error) {
+			console.log(error);
+		}
+	});
+};
+
+const addSubmissionAndPoints = (challengeId, uid) => {
+	let points;
+	pool.query('SELECT * FROM challenges WHERE "challengeId" = $1', [challengeId], (error, results) => {
+		if (error) {
+			console.log(error);
+		}
+
+		if (results.rows.length === 1) {
+			points = parseInt(results.rows[0].points);
+		}
+
+		if (points) {
+			pool.query(
+				'UPDATE stats SET submissions = submissions + 1, points = points + $1 WHERE uid = $2',
+				[points, uid],
+				(error, results) => {
+					if (error) {
+						console.log(error);
+					}
+				}
+			);
+		}
+	});
+};
+
+const getStats = (request, response) => {
+	const uid = request.userId;
+	let stats = {};
+
+	pool.query('SELECT * FROM stats WHERE uid = $1', [uid], async (error, results) => {
+		if (error) {
+			console.log(error);
+			return response.status(500).json({ message: error.message });
+		}
+
+		if (results.rows.length === 1) {
+			stats.points = results.rows[0].points;
+			stats.submissions = results.rows[0].submissions;
+		}
+
+		const user = await getUser(uid);
+		stats.user = user ? user : 'hacker';
+
+		const completed = await getNoOfCompletedChallenges(uid);
+		stats.completed = completed ? completed : 0;
+		const rate = stats.completed / stats.submissions;
+		stats.rate = rate ? roundNumber(rate * 100) : 0;
+
+		response.status(200).json(stats);
+	});
+};
+
+const getUser = async (uid) => {
+	const results = await pool.query('SELECT * FROM users WHERE uid = $1', [uid]);
+	if (results.rows.length === 1) {
+		let user = results.rows[0].email;
+		user = user.split('@')[0];
+		return user;
+	}
+};
+
+const getNoOfCompletedChallenges = async (uid) => {
+	const results = await pool.query('SELECT COUNT(*) FROM completed WHERE uid = $1', [uid]);
+	const completed = parseInt(results.rows[0].count);
+	return completed;
+};
+
 module.exports = {
 	getChallenges,
-	getChallenge,
 	login,
 	register,
 	changePassword,
-	getChallengeContent,
-	checkFlag
+	checkFlag,
+	getStats
 };

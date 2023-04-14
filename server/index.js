@@ -14,13 +14,23 @@ app.use(
 	})
 );
 
+app.use(express.static('public'));
+app.get('/htmlbtn', (req, res) => {
+	res.sendFile(__dirname + '/public/htmlbtn.html');
+});
+app.get('/httpreq', (req, res) => {
+	res.sendFile(__dirname + '/public/httpreq.html');
+});
+app.get('/req-flag', (req, res) => {
+	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
+});
+
 app.get('/challenges', db.getChallenges);
-app.get('/challenges/:id', db.getChallenge);
 app.post('/login', db.login);
 app.post('/register', db.register);
 app.post('/change-password', verifyToken, db.changePassword);
-app.get('/challenge-solve/:id', db.getChallengeContent);
 app.post('/check-flag', verifyToken, db.checkFlag);
+app.get('/stats', verifyToken, db.getStats);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
