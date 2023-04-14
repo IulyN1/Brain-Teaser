@@ -26,7 +26,7 @@ function Challenges() {
 				<div className="mainChallenges">
 					<div className="challengesContainer">
 						{challenges.map((challenge) => (
-							<ChallengeCard key={challenge.cid} challenge={challenge} />
+							<ChallengeCard key={challenge.challengeId} challenge={challenge} />
 						))}
 					</div>
 				</div>

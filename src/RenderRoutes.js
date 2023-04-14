@@ -7,7 +7,6 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Challenges from './pages/Challenges';
 import Challenge from './pages/Challenge';
-import ChallengeSolve from './pages/ChallengeSolve';
 
 function RenderRoutes() {
 	return (
@@ -20,7 +19,6 @@ function RenderRoutes() {
 				<Route path="login" element={<Login />} />
 				<Route path="challenges" element={<Challenges />} />
 				<Route path="challenges/:id" element={<Challenge />} />
-				<Route path="challenges/solve/:id" element={<ChallengeSolve />} />
 			</Routes>
 		</BrowserRouter>
 	);

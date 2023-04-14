@@ -1,11 +1,7 @@
-const baseUrl = 'http://localhost:5000/';
+export const baseUrl = 'http://localhost:5000/';
 
 export async function getChallenges() {
 	return await (await fetch(`${baseUrl}challenges`)).text();
-}
-
-export async function getChallenge(id) {
-	return await (await fetch(`${baseUrl}challenges/${id}`)).text();
 }
 
 export async function login(email, password) {
@@ -51,10 +47,6 @@ export async function changePassword(token, oldPassword, newPassword) {
 	return response;
 }
 
-export async function getChallengeContent(id) {
-	return (await fetch(`${baseUrl}challenge-solve/${id}`)).text();
-}
-
 export async function checkFlag(token, challengeId, flag) {
 	const response = await fetch(`${baseUrl}check-flag`, {
 		method: 'POST',
@@ -64,6 +56,15 @@ export async function checkFlag(token, challengeId, flag) {
 		}),
 		headers: {
 			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`
+		}
+	});
+	return response.json();
+}
+
+export async function getStats(token) {
+	const response = await fetch(`${baseUrl}stats`, {
+		headers: {
 			Authorization: `Bearer ${token}`
 		}
 	});
