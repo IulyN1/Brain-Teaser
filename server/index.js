@@ -16,13 +16,23 @@ app.use(
 
 app.use(express.static('public'));
 app.get('/htmlbtn', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
 	res.sendFile(__dirname + '/public/htmlbtn.html');
 });
 app.get('/httpreq', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
 	res.sendFile(__dirname + '/public/httpreq.html');
 });
 app.get('/req-flag', (req, res) => {
 	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
+});
+app.get('/jscode', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
+	res.sendFile(__dirname + '/public/jscode.html');
+});
+app.get('/xss1', (req, res) => {
+	res.cookie('flag', 'ThisCouldBeAnAdminCookieButItIsNotLmao', { maxAge: 86400000 });
+	res.sendFile(__dirname + '/public/xss1.html');
 });
 
 app.get('/challenges', db.getChallenges);

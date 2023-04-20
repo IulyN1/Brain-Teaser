@@ -17,6 +17,10 @@
 	padding: 10px;
 }
 
+.challengeCardContent h3 {
+	text-align: center;
+}
+
 .challengeCardContent h4 {
 	font-style: italic;
 }
