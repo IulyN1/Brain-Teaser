@@ -24,6 +24,9 @@ app.get('/httpreq', (req, res) => {
 app.get('/req-flag', (req, res) => {
 	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
 });
+app.get('/jscode', (req, res) => {
+	res.sendFile(__dirname + '/public/jscode.html');
+});
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', db.login);
