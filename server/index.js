@@ -34,6 +34,10 @@ app.get('/jsobf', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
 	res.sendFile(__dirname + '/public/jsobf.html');
 });
+app.get('/exfilcss', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
+	res.sendFile(__dirname + '/public/exfilcss.html');
+});
 app.get('/xss1', (req, res) => {
 	res.cookie('flag', 'ThisCouldBeAnAdminCookieButItIsNotLmao', { maxAge: 86400000 });
 	res.sendFile(__dirname + '/public/xss1.html');
