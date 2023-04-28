@@ -42,6 +42,16 @@ app.get('/xss1', (req, res) => {
 	res.cookie('flag', 'ThisCouldBeAnAdminCookieButItIsNotLmao', { maxAge: 86400000 });
 	res.sendFile(__dirname + '/public/xss1.html');
 });
+app.get('/xss2', (req, res) => {
+	res.cookie('flag', 'DOOM2016BasedGameReflectedXSSAttacks', { maxAge: 86400000 });
+	res.sendFile(__dirname + '/public/xss2.html');
+});
+app.get('/xss2-blog', (req, res) => {
+	res.sendFile(__dirname + '/public/xss2-blog.html');
+});
+app.get('/xss2-notfound', (req, res) => {
+	res.sendFile(__dirname + '/public/xss2-notfound.html');
+});
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', db.login);
