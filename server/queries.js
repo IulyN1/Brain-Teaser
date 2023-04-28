@@ -10,7 +10,7 @@ const pool = new Pool({
 });
 
 const getChallenges = (request, response) => {
-	pool.query('SELECT * FROM challenges', (error, results) => {
+	pool.query('SELECT * FROM challenges ORDER BY level, "challengeId" ASC', (error, results) => {
 		if (error) {
 			console.log(error);
 			return response.status(500).json({ message: error.message });
