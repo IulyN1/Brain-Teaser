@@ -58,6 +58,22 @@ app.get('/sqlinj', (req, res) => {
 	res.sendFile(__dirname + '/public/sqlinj.html');
 });
 app.post('/sqlinj-login', staticDb.login);
+app.get('/csrf', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
+	res.cookie('token', 'myaccount', { maxAge: 86400000 });
+	res.sendFile(__dirname + '/public/csrf.html');
+});
+app.post('/csrf-bugreport', (req, res) => {
+	const link = req.body.link;
+	if (link.includes('http://localhost:5000/csrf/send?to=myaccount&amount=1000000')) {
+		res.status(200).send('DoILookLikeATokenMisterReferer?No');
+	} else {
+		res.status(200).send('Thank you!');
+	}
+});
+app.get('/csrf/send', (req, res) => {
+	res.status(200).send('Money sent!');
+});
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', db.login);
