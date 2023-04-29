@@ -11,7 +11,7 @@ const login = async (request, response) => {
 	const user = request.body.username;
 	const pass = request.body.password;
 
-	pool.query(`SELECT id FROM users WHERE username = '${user}' AND password = '${pass}'`, async (error, results) => {
+	pool.query(`SELECT id FROM users WHERE username = '${user}' AND password = '${pass}'`, (error, results) => {
 		if (error) {
 			console.log(error);
 		}

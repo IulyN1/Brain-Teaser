@@ -4,7 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./queries');
 const staticDb = require('./staticQueries');
-
+const puppeteer = require('puppeteer');
 const app = express();
 
 app.use(cors());
@@ -60,12 +60,11 @@ app.get('/sqlinj', (req, res) => {
 app.post('/sqlinj-login', staticDb.login);
 app.get('/csrf', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.cookie('token', 'myaccount', { maxAge: 86400000 });
 	res.sendFile(__dirname + '/public/csrf.html');
 });
 app.post('/csrf-bugreport', (req, res) => {
 	const link = req.body.link;
-	if (link.includes('http://localhost:5000/csrf/send?to=myaccount&amount=1000000')) {
+	if (link.includes('http://localhost:5000/csrf/send?to=attacker&amount=1000000')) {
 		res.status(200).send('DoILookLikeATokenMisterReferer?No');
 	} else {
 		res.status(200).send('Thank you!');
@@ -73,6 +72,37 @@ app.post('/csrf-bugreport', (req, res) => {
 });
 app.get('/csrf/send', (req, res) => {
 	res.status(200).send('Money sent!');
+});
+app.get('/sesshij', (req, res) => {
+	res.sendFile(__dirname + '/public/sesshij.html');
+});
+function simulatePageRendering() {
+	setInterval(async () => {
+		const browser = await puppeteer.launch({ headless: 'new' });
+		const page = await browser.newPage();
+		await page.setCookie({
+			name: 'flag',
+			value: 'WhatDoYouMeanYourSession?ItIsOurSession1848',
+			domain: 'localhost',
+			path: '/'
+		});
+		await page.goto('http://localhost:5000/sesshij');
+		// Close page after 5 seconds
+		setTimeout(async () => {
+			await browser.close();
+		}, 5000);
+	}, 20000); // Simulate page rendering every 20 seconds
+}
+let comments = [];
+app.post('/sesshij/send', (req, res) => {
+	const comment = req.body.comment;
+	comments.push(comment);
+	res.status(200).send(true);
+
+	simulatePageRendering();
+});
+app.get('/sesshij-comments', (req, res) => {
+	res.status(200).json(comments);
 });
 
 app.get('/challenges', db.getChallenges);
