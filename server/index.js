@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./queries');
+const staticDb = require('./staticQueries');
 
 const app = express();
 
@@ -52,6 +53,11 @@ app.get('/xss2-blog', (req, res) => {
 app.get('/xss2-notfound', (req, res) => {
 	res.sendFile(__dirname + '/public/xss2-notfound.html');
 });
+app.get('/sqlinj', (req, res) => {
+	res.clearCookie('flag', { path: '/' });
+	res.sendFile(__dirname + '/public/sqlinj.html');
+});
+app.post('/sqlinj-login', staticDb.login);
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', db.login);
