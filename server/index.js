@@ -16,51 +16,51 @@ app.use(
 );
 
 app.use(express.static('public'));
-app.get('/htmlbtn', (req, res) => {
+app.get('/htmlhid', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/htmlbtn.html');
+	res.sendFile(__dirname + '/public/htmlhid/htmlhid.html');
 });
 app.get('/httpreq', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/httpreq.html');
+	res.sendFile(__dirname + '/public/httpreq/httpreq.html');
 });
 app.get('/req-flag', (req, res) => {
 	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
 });
 app.get('/jscode', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/jscode.html');
+	res.sendFile(__dirname + '/public/jscode/jscode.html');
 });
 app.get('/jsobf', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/jsobf.html');
+	res.sendFile(__dirname + '/public/jsobf/jsobf.html');
 });
 app.get('/exfilcss', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/exfilcss.html');
+	res.sendFile(__dirname + '/public/exfilcss/exfilcss.html');
 });
 app.get('/xss1', (req, res) => {
 	res.cookie('flag', 'ThisCouldBeAnAdminCookieButItIsNotLmao', { maxAge: 86400000 });
-	res.sendFile(__dirname + '/public/xss1.html');
+	res.sendFile(__dirname + '/public/xss1/xss1.html');
 });
 app.get('/xss2', (req, res) => {
 	res.cookie('flag', 'DOOM2016BasedGameReflectedXSSAttacks', { maxAge: 86400000 });
-	res.sendFile(__dirname + '/public/xss2.html');
+	res.sendFile(__dirname + '/public/xss2/xss2.html');
 });
 app.get('/xss2-blog', (req, res) => {
-	res.sendFile(__dirname + '/public/xss2-blog.html');
+	res.sendFile(__dirname + '/public/xss2/xss2-blog.html');
 });
 app.get('/xss2-notfound', (req, res) => {
-	res.sendFile(__dirname + '/public/xss2-notfound.html');
+	res.sendFile(__dirname + '/public/xss2/xss2-notfound.html');
 });
 app.get('/sqlinj', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/sqlinj.html');
+	res.sendFile(__dirname + '/public/sqlinj/sqlinj.html');
 });
 app.post('/sqlinj-login', staticDb.login);
 app.get('/csrf', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/csrf.html');
+	res.sendFile(__dirname + '/public/csrf/csrf.html');
 });
 app.post('/csrf-bugreport', (req, res) => {
 	const link = req.body.link;
@@ -74,7 +74,7 @@ app.get('/csrf/send', (req, res) => {
 	res.status(200).send('Money sent!');
 });
 app.get('/sesshij', (req, res) => {
-	res.sendFile(__dirname + '/public/sesshij.html');
+	res.sendFile(__dirname + '/public/sesshij/sesshij.html');
 });
 function simulatePageRendering() {
 	setInterval(async () => {
