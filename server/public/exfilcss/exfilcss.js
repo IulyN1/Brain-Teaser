@@ -15,7 +15,7 @@ function setThemeOnLoad(name) {
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	let themeValue = urlParams.get(name);
-	console.log(themeValue);
+
 	if (themeValue === 'light' || !themeValue) {
 		themeStyle.setAttribute('href', 'exfilcss-light.css');
 	} else if (themeValue === 'dark') {

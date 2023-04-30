@@ -15,9 +15,11 @@ const login = async (request, response) => {
 		if (error) {
 			console.log(error);
 		}
-		if (results) {
+		if (results?.rows[0]?.id) {
 			const id = results.rows[0].id;
 			response.status(200).json({ id });
+		} else {
+			response.status(404).json({ id: 'User not found' });
 		}
 	});
 };
