@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <p>Hello, <b>attacker</b>!</p>
+        <h1>Bank dashboard</h1>
+        <h3>Your money:</h3>
+        <span id="money">100</span><span>$</span>
+
+        <h3>Send money:</h3>
+        <label>To:</label>
+        <input type="text" id="to"/>
+        <br>
+        <label>Amount:</label>
+        <input type="text" id="amount"/>
+        <br>
+        <button id="sendBtn">Send</button>
+        <p id="sendResponse"></p>
+
+        <p>Is there a problem with your bank account page? Send us the details!</p>
+        <input type="text" id="link"/>
+        <button id="reportBtn">Report</button>
+        <p id="reportResponse"></p>
+        <script src="csrf.js"></script>
+    </body>
+</html>

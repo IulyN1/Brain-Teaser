@@ -1,8 +1,10 @@
 const { verifyToken } = require('./utils');
 const express = require('express');
 const cors = require('cors');
+
 const bodyParser = require('body-parser');
 const db = require('./queries');
+const staticRoutes = require('./staticRoutes');
 
 const app = express();
 
@@ -14,34 +16,7 @@ app.use(
 	})
 );
 
-app.use(express.static('public'));
-app.get('/htmlbtn', (req, res) => {
-	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/htmlbtn.html');
-});
-app.get('/httpreq', (req, res) => {
-	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/httpreq.html');
-});
-app.get('/req-flag', (req, res) => {
-	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
-});
-app.get('/jscode', (req, res) => {
-	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/jscode.html');
-});
-app.get('/jsobf', (req, res) => {
-	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/jsobf.html');
-});
-app.get('/exfilcss', (req, res) => {
-	res.clearCookie('flag', { path: '/' });
-	res.sendFile(__dirname + '/public/exfilcss.html');
-});
-app.get('/xss1', (req, res) => {
-	res.cookie('flag', 'ThisCouldBeAnAdminCookieButItIsNotLmao', { maxAge: 86400000 });
-	res.sendFile(__dirname + '/public/xss1.html');
-});
+app.use('/', staticRoutes);
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', db.login);
