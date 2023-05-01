@@ -7,9 +7,11 @@ const renderComments = async () => {
 	const response = await fetch('/sesshij-comments');
 	const comments = await response.json();
 
-	comments.forEach((comment) => {
+	comments.forEach((comment, index, array) => {
 		const newEl = document.createElement('p');
-		newEl.className = 'comment';
+		if (index === array.length - 1) {
+			newEl.className = 'lastComment';
+		}
 		newEl.innerHTML = comment;
 		container.appendChild(newEl);
 	});
