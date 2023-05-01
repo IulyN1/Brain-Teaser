@@ -15,7 +15,7 @@ export async function login(email, password) {
 			'Content-Type': 'application/json'
 		}
 	});
-	return await response.json();
+	return response;
 }
 
 export async function register(email, password) {
@@ -29,7 +29,7 @@ export async function register(email, password) {
 			'Content-Type': 'application/json'
 		}
 	});
-	return await response.json();
+	return response;
 }
 
 export async function changePassword(token, oldPassword, newPassword) {

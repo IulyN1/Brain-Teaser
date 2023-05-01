@@ -22,9 +22,14 @@ function Login() {
 		e.preventDefault();
 
 		if (email && pass) {
+			if (pass.length < 6) {
+				setErrorMessage('Password should be at least 6 characters long!');
+				return;
+			}
 			const response = await login(email, pass);
-			if (response.token) {
-				localStorage.setItem('token', response.token);
+			const parsedResponse = await response.json();
+			if (response.status === 200 && parsedResponse.token) {
+				localStorage.setItem('token', parsedResponse.token);
 				setErrorMessage('');
 				navigate('/challenges');
 			} else {

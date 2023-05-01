@@ -5,6 +5,9 @@ const puppeteer = require('puppeteer');
 
 router.use(express.static('public'));
 
+let comments = [];
+let clearCommentsId;
+
 // Routes for static pages
 router.get('/htmlhid', (req, res) => {
 	res.clearCookie('flag', { path: '/' });
@@ -53,7 +56,6 @@ router.get('/sesshij', (req, res) => {
 });
 
 // Routes for requests on static pages
-let comments = [];
 router.get('/req-flag', (req, res) => {
 	res.status(200).json({ message: 'Work in progress!', flag: 'IDidNotRequestThisAbsolutelyNotAFlag' });
 });
@@ -75,13 +77,18 @@ router.post('/sesshij/send', (req, res) => {
 	res.status(200).send(true);
 
 	simulatePageRendering();
+
+	if (clearCommentsId) {
+		clearInterval(clearCommentsId);
+	}
+	clearComments();
 });
 router.get('/sesshij-comments', (req, res) => {
 	res.status(200).json(comments);
 });
 
 function simulatePageRendering() {
-	setInterval(async () => {
+	(async () => {
 		const browser = await puppeteer.launch({ headless: 'new' });
 		const page = await browser.newPage();
 		await page.setCookie({
@@ -91,11 +98,17 @@ function simulatePageRendering() {
 			path: '/'
 		});
 		await page.goto('http://localhost:5000/sesshij');
-		// Close page after 5 seconds
-		setTimeout(async () => {
-			await browser.close();
-		}, 5000);
-	}, 20000); // Simulate page rendering every 20 seconds
+		try {
+			await page.waitForSelector('.lastComment', { timeout: 5000 });
+		} catch (error) {}
+		await browser.close();
+	})();
+}
+
+function clearComments() {
+	clearCommentsId = setInterval(async () => {
+		comments = [];
+	}, 30000); // Clear comments every 30 seconds
 }
 
 module.exports = router;
