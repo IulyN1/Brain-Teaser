@@ -24,6 +24,10 @@ function ChangePassword() {
 
 		if (oldPass && newPass) {
 			if (newPass === newPassAgain) {
+				if (oldPass.length < 6 || newPass.length < 6) {
+					setErrorMessage('Passwords should be at least 6 characters long!');
+					return;
+				}
 				const response = await changePassword(token, oldPass, newPass);
 				const parsedResponse = await response.json();
 				if (response.status === 200) {
@@ -34,7 +38,7 @@ function ChangePassword() {
 					setErrorMessage(parsedResponse.message);
 				}
 			} else {
-				setErrorMessage('The new password does not match!');
+				setErrorMessage('The passwords do not match!');
 			}
 		} else {
 			setErrorMessage('Password fields cannot be empty!');

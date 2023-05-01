@@ -1,4 +1,4 @@
-const { verifyToken } = require('./utils');
+const { verifyToken, sanitizeInputs } = require('./utils');
 const express = require('express');
 const cors = require('cors');
 
@@ -19,10 +19,10 @@ app.use(
 app.use('/', staticRoutes);
 
 app.get('/challenges', db.getChallenges);
-app.post('/login', db.login);
-app.post('/register', db.register);
-app.post('/change-password', verifyToken, db.changePassword);
-app.post('/check-flag', verifyToken, db.checkFlag);
+app.post('/login', sanitizeInputs, db.login);
+app.post('/register', sanitizeInputs, db.register);
+app.post('/change-password', sanitizeInputs, verifyToken, db.changePassword);
+app.post('/check-flag', sanitizeInputs, verifyToken, db.checkFlag);
 app.get('/stats', verifyToken, db.getStats);
 
 const port = process.env.PORT || 5000;

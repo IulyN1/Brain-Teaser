@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { body, validationResult } = require('express-validator');
 
 const jwtSecret = 'myincrediblysecretkey';
 
@@ -75,6 +76,51 @@ async function comparePasswords(password1, password2) {
 }
 
 /**
+ * Middleware function to sanitize inputs.
+ * This middleware should be added to routes that have user submitted inputs in the body of the request.
+ * @param {object} req - the request object
+ * @param {object} res - the response object
+ * @param {function} next - (default) callback function for carrying on with the request
+ * @returns - 400 error if there are validation errors
+ *          - otherwise carry on with the request
+ */
+function sanitizeInputs(req, res, next) {
+	// Define validation and sanitization rules for each input field
+	const validationRules = [];
+
+	if (req.body.email) {
+		validationRules.push(body('email').trim().isEmail().normalizeEmail().escape());
+	}
+	if (req.body.password) {
+		validationRules.push(body('password').trim().isLength({ min: 6 }).escape());
+	}
+	if (req.body.oldPassword) {
+		validationRules.push(body('oldPassword').trim().isLength({ min: 6 }).escape());
+	}
+	if (req.body.newPassword) {
+		validationRules.push(body('newPassword').trim().isLength({ min: 6 }).escape());
+	}
+	if (req.body.challengeId) {
+		validationRules.push(body('challengeId').trim().escape());
+	}
+	if (req.body.flag) {
+		validationRules.push(body('flag').trim().escape());
+	}
+
+	// Run the validation rules on the request body
+	Promise.all(validationRules.map((rule) => rule.run(req))).then(() => {
+		// Check for validation errors and handle them appropriately
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ message: errors.array() });
+		}
+
+		// If there are no errors, continue to the next middleware
+		next();
+	});
+}
+
+/**
  * Rounds a number to 2 digits at max, using the system precision
  * @param {number} number - the number to be rounded
  * @returns {number} - the rounded number
@@ -83,4 +129,4 @@ function roundNumber(number) {
 	return Math.round((number + Number.EPSILON) * 100) / 100;
 }
 
-module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, roundNumber };
+module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, sanitizeInputs, roundNumber };

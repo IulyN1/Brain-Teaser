@@ -17,13 +17,18 @@ function Register() {
 
 		if (email && pass) {
 			if (pass === passAgain) {
+				if (pass.length < 6) {
+					setErrorMessage('Password should be at least 6 characters long!');
+					return;
+				}
 				const response = await register(email, pass);
-				if (response) {
+				const parsedResponse = await response.json();
+				if (response.status === 200 && parsedResponse) {
 					localStorage.removeItem('token');
 					setErrorMessage('');
 					navigate('/login');
 				} else {
-					setErrorMessage('A database error has occurred!');
+					setErrorMessage('Invalid email or password!');
 				}
 			} else {
 				setErrorMessage('The passwords do not match!');
