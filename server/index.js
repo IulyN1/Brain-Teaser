@@ -1,6 +1,7 @@
 const { verifyToken, sanitizeInputs } = require('./utils');
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet');
 
 const bodyParser = require('body-parser');
 const db = require('./queries');
@@ -17,6 +18,16 @@ app.use(
 );
 
 app.use('/', staticRoutes);
+
+app.use(
+	helmet({
+		contentSecurityPolicy: {
+			directives: {
+				defaultSrc: ["'self'"]
+			}
+		}
+	})
+);
 
 app.get('/challenges', db.getChallenges);
 app.post('/login', sanitizeInputs, db.login);
