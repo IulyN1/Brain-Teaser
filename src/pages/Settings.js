@@ -32,20 +32,23 @@ function Settings() {
 				<Header />
 				<div className="mainSettings">
 					<Link to="/challenges">Back to challenges</Link>
-					<h1>Hello, {stats.user}!</h1>
+					<h1>Hello, {stats?.user}!</h1>
 					<div className="statsContainer">
 						<h2>Your stats</h2>
 						<h4>
-							Total points: <span>{stats.points}</span>
+							Rank: <span>{stats?.ranking?.rank}</span> out of <span>{stats?.ranking?.of}</span>
 						</h4>
 						<h4>
-							No. of challenges completed: <span>{stats.completed}</span>
+							Total points: <span>{stats?.points}</span>
 						</h4>
 						<h4>
-							No. of submissions: <span>{stats.submissions}</span>
+							No. of challenges completed: <span>{stats?.completed}</span>
 						</h4>
 						<h4>
-							Rate of success: <span>{stats.rate}%</span>
+							No. of submissions: <span>{stats?.submissions}</span>
+						</h4>
+						<h4>
+							Rate of success: <span>{stats?.rate}%</span>
 						</h4>
 					</div>
 					<h2>Change password</h2>

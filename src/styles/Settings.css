@@ -60,6 +60,15 @@
 	margin-left: 20px;
 }
 
+.statsContainer h4:first-of-type {
+	font-size: 22px;
+	font-style: italic;
+}
+
+.statsContainer h4:first-of-type span {
+	font-size: 22px;
+}
+
 @media screen and (max-width: 400px) {
 	.mainSettings {
 		padding-left: 20px;

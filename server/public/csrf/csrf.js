@@ -10,6 +10,9 @@ const money = document.querySelector('#money');
 sendBtn.addEventListener('click', async () => {
 	const to = toInput.value;
 	const amount = amountInput.value;
+	const moneyAmount = money.textContent;
+	money.textContent = parseFloat(moneyAmount) - parseFloat(amount);
+
 	const response = await fetch(
 		'/csrf/send?' +
 			new URLSearchParams({
