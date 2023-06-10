@@ -233,6 +233,9 @@ const getStats = (request, response) => {
 		const rate = stats.completed / stats.submissions;
 		stats.rate = rate ? roundNumber(rate * 100) : 0;
 
+		const ranking = await getRank(uid);
+		stats.ranking = ranking ? ranking : { rank: 0, of: 0 };
+
 		response.status(200).json(stats);
 	});
 };
@@ -250,6 +253,27 @@ const getNoOfCompletedChallenges = async (uid) => {
 	const results = await pool.query('SELECT COUNT(*) FROM completed WHERE uid = $1', [uid]);
 	const completed = parseInt(results.rows[0].count);
 	return completed;
+};
+
+const getRank = async (uid) => {
+	const results = await pool.query('SELECT * FROM stats ORDER BY points DESC, submissions ASC');
+	const userResults = await pool.query('SELECT * FROM stats WHERE uid = $1', [uid]);
+	let ranking = {};
+
+	if (results.rows && userResults.rows) {
+		const length = results.rows.length;
+		const stats = results.rows;
+		const userStats = userResults.rows[0];
+
+		for (let i = 0; i < length; i++) {
+			if (stats[i].points === userStats.points && stats[i].submissions === userStats.submissions) {
+				ranking.rank = i + 1;
+				break;
+			}
+		}
+		ranking.of = length;
+	}
+	return ranking;
 };
 
 module.exports = {
