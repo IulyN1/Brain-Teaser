@@ -28,7 +28,9 @@ function Register() {
 					setErrorMessage('');
 					navigate('/login');
 				} else {
-					setErrorMessage('Invalid email or password!');
+					setErrorMessage(
+						parsedResponse?.message ? parsedResponse.message : 'An unknown error has occurred!'
+					);
 				}
 			} else {
 				setErrorMessage('The passwords do not match!');

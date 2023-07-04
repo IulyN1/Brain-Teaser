@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 
 const jwtSecret = 'myincrediblysecretkey';
+const UNIQUE_EMAIL = 'Unique_Email';
 
 /**
  * Middleware function to verify JWT tokens.
@@ -129,4 +130,12 @@ function roundNumber(number) {
 	return Math.round((number + Number.EPSILON) * 100) / 100;
 }
 
-module.exports = { verifyToken, generateToken, hashPassword, comparePasswords, sanitizeInputs, roundNumber };
+module.exports = {
+	verifyToken,
+	generateToken,
+	hashPassword,
+	comparePasswords,
+	sanitizeInputs,
+	roundNumber,
+	UNIQUE_EMAIL
+};

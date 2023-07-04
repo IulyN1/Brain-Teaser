@@ -1,4 +1,4 @@
-const { generateToken, hashPassword, comparePasswords, roundNumber } = require('./utils');
+const { generateToken, hashPassword, comparePasswords, roundNumber, UNIQUE_EMAIL } = require('./utils');
 
 const Pool = require('pg').Pool;
 const pool = new Pool({
@@ -59,7 +59,11 @@ const register = async (request, response) => {
 	pool.query('INSERT INTO users(email, password) VALUES($1, $2)', [email, hashedPassword], (error, results) => {
 		if (error) {
 			console.log(error);
-			return response.status(500).json({ message: error.message });
+			if (error?.constraint === UNIQUE_EMAIL) {
+				return response.status(500).json({ message: 'An account with this email already exists!' });
+			} else {
+				return response.status(500).json({ message: 'Invalid email or password!' });
+			}
 		}
 		insertIntoStats(email, hashedPassword);
 		response.status(200).json(true);
